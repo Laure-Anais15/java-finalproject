@@ -1,5 +1,6 @@
 package com.bankapp.banking_system.service;
 
+import com.bankapp.banking_system.model.users.AccountHolder;
 import com.bankapp.banking_system.model.users.User;
 import com.bankapp.banking_system.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +36,7 @@ public class UserServiceTest {
 
         when(userRepository.save(user)).thenReturn(user);
 
-        User result = userService.createUser(user);
+        AccountHolder result = userService.createUser(user);
 
         assertNotNull(result);
         assertEquals("Alice", result.getName());
@@ -44,16 +45,16 @@ public class UserServiceTest {
 
     @Test
     void testGetAllUsers() {
-        User user1 = new User();
+        AccountHolder user1 = new AccountHolder();
         user1.setName("Alice");
-        User user2 = new User();
+        AccountHolder user2 = new AccountHolder();
         user2.setName("Bob");
 
-        List<User> userList = Arrays.asList(user1, user2);
+        List<AccountHolder> userList = Arrays.asList(user1, user2);
 
         when(userRepository.findAll()).thenReturn(userList);
 
-        List<User> result = userService.getAllUsers();
+        List<AccountHolder> result = userService.getAllUsers();
 
         assertEquals(2, result.size());
         assertEquals("Alice", result.get(0).getName());
@@ -63,13 +64,13 @@ public class UserServiceTest {
 
     @Test
     void testFindUserById() {
-        User user = new User();
+        AccountHolder user = new AccountHolder();
         user.setId(1L);
         user.setName("Alice");
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
-        User result = userService.findUserById(1L);
+        AccountHolder result = userService.findUserById(1L);
 
         assertNotNull(result);
         assertEquals("Alice", result.getName());

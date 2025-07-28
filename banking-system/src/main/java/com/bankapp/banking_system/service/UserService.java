@@ -1,6 +1,7 @@
 package com.bankapp.banking_system.service;
 
 import com.bankapp.banking_system.model.users.AccountHolder;
+import com.bankapp.banking_system.model.users.User;
 import com.bankapp.banking_system.repository.AccountHolderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,4 +34,5 @@ public class UserService {
     public void deleteUser(Long id) {
         accountHolderRepository.deleteById(id);
     }
+
 }

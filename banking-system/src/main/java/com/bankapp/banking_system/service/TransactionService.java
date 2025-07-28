@@ -14,30 +14,31 @@ public class TransactionService {
     @Autowired
     private AccountRepository accountRepository;
 
-    // Transactionnelle = si erreur, on annule tout
     @Transactional
-    public void transferMoney(Long fromAccountId, Long toAccountId, Double amount) {
-        if (amount <= 0) {
+    public void transferMoney(Long fromAccountId, Long toAccountId, BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Transfer amount must be greater than 0.");
         }
 
-        Account fromAccount = accountRepository.findById(fromAccountId)
+        // Charger les comptes (ils seront soit CheckingAccount, soit SavingAccount...)
+        var fromAccount = accountRepository.findById(fromAccountId)
                 .orElseThrow(() -> new RuntimeException("Sender account not found"));
 
-        Account toAccount = accountRepository.findById(toAccountId)
+        var toAccount = accountRepository.findById(toAccountId)
                 .orElseThrow(() -> new RuntimeException("Recipient account not found"));
-/*
-        if (fromAccount.getBalance().getAmount() < amount) {
+
+        // Vérification solde
+        if (fromAccount.getBalance().getAmount().compareTo(amount) < 0) {
             throw new RuntimeException("Insufficient funds on sender account");
         }
 
-        // Débit et crédit
-        fromAccount.setBalance(fromAccount.getBalance() - amount);
-        toAccount.setBalance(toAccount.getBalance() + amount);
+        // Modification des soldes
+        fromAccount.getBalance().setAmount(fromAccount.getBalance().getAmount().subtract(amount));
+        toAccount.getBalance().setAmount(toAccount.getBalance().getAmount().add(amount));
 
         // Sauvegarde
         accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
-        */
     }
 }
+

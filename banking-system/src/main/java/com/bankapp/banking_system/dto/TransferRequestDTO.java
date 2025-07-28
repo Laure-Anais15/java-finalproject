@@ -1,4 +1,3 @@
-// TransferRequestDTO.java (à mettre dans un package dto)
 package com.bankapp.banking_system.dto;
 
 public class TransferRequestDTO {
@@ -6,7 +5,15 @@ public class TransferRequestDTO {
     private Long toAccountId;
     private Double amount;
 
-    // Getters & setters
+    public TransferRequestDTO() {
+    }
+
+    public TransferRequestDTO(Long fromAccountId, Long toAccountId, Double amount) {
+        this.fromAccountId = fromAccountId;
+        this.toAccountId = toAccountId;
+        this.amount = amount;
+    }
+
     public Long getFromAccountId() {
         return fromAccountId;
     }

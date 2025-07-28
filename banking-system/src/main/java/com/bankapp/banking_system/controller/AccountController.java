@@ -1,8 +1,7 @@
 package com.bankapp.banking_system.controller;
 
-import com.bankapp.banking_system.model.accounts.Account;
-import com.bankapp.banking_system.model.accounts.Checking;
-import com.bankapp.banking_system.model.accounts.Savings;
+import com.bankapp.banking_system.model.accounts.*;
+import com.bankapp.banking_system.model.embedded.Money;
 import com.bankapp.banking_system.model.users.AccountHolder;
 import com.bankapp.banking_system.service.AccountService;
 import org.hibernate.annotations.Check;
@@ -33,20 +32,31 @@ public class AccountController {
 
     // Endpoint POST /accounts
     @PostMapping("/checking")
-    public Checking createAccount(@RequestBody Checking account) {
+    public Checking createCheckingAccount(@RequestBody Checking account) {
         return accountService.createCheckingAccount(account);
     }
 
-    @PostMapping("/saving")
-    public Savings createAccount(@RequestBody Savings account) {
+    @PostMapping("/savings")
+    public Savings createSavingsAccount(@RequestBody Savings account) {
         return accountService.createSavingsAccount(account);
     }
 
-    // Endpoint PUT /accounts/{id}
-    @PutMapping("/{id}")
-    public Account updateAccount(@PathVariable Long id, @RequestBody Account account) {
-        return accountService.updateAccount(id, account);
+    @PostMapping("/creditcard")
+    public CreditCard createCreditCardAccount(@RequestBody CreditCard account) {
+        return accountService.createCreditCardAccount(account);
     }
+
+    @PostMapping("/studentchecking")
+    public StudentChecking createStudentCheckingAccount(@RequestBody StudentChecking account) {
+        return accountService.createStudentCheckingAccount(account);
+    }
+
+    // Endpoint PUT /accounts/{id}
+    @PutMapping("/{id}/balance")
+    public Account updateAccountBalance(@PathVariable Long id, @RequestBody Money newBalance) {
+        return accountService.updateAccountBalance(id, newBalance);
+    }
+
 
     // Endpoint DELETE /accounts/{id}
     @DeleteMapping("/{id}")
