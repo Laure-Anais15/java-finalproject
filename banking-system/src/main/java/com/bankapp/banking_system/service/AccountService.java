@@ -20,6 +20,8 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
+    private AccountHolderRepository accountHolderRepository;
+    @Autowired
     private SavingsRepository savingsRepository;
     @Autowired
     private CheckingAccountRepository checkingAccountRepository;
@@ -67,5 +69,12 @@ public class AccountService {
                 .orElseThrow(() -> new RuntimeException("Account not found with id: " + accountId));
         account.setBalance(newBalance);
         return accountRepository.save(account);
+    }
+
+    public AccountHolder updateAccountHolderMail(Long accountId, String newName) {
+        AccountHolder account = accountHolderRepository.findById(accountId)
+                .orElseThrow(() -> new RuntimeException("Account not found with id: " + accountId));
+        account.setName(newName);
+        return accountHolderRepository.save(account);
     }
 }

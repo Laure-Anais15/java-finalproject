@@ -33,4 +33,5 @@ public class AccountHolder extends User {
             @AttributeOverride(name = "postalCode", column = @Column(name = "mailing_postal_code"))
     })
     private Address mailingAddress;
+    private String name;
 }

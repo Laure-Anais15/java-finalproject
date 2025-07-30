@@ -1,5 +1,6 @@
 package com.bankapp.banking_system.service;
 
+import com.bankapp.banking_system.model.accounts.Account;
 import com.bankapp.banking_system.model.users.AccountHolder;
 import com.bankapp.banking_system.model.users.User;
 import com.bankapp.banking_system.repository.UserRepository;
@@ -31,7 +32,7 @@ public class UserServiceTest {
 
     @Test
     void testCreateUser() {
-        User user = new User();
+        AccountHolder user = new AccountHolder();
         user.setName("Alice");
 
         when(userRepository.save(user)).thenReturn(user);
@@ -50,7 +51,7 @@ public class UserServiceTest {
         AccountHolder user2 = new AccountHolder();
         user2.setName("Bob");
 
-        List<AccountHolder> userList = Arrays.asList(user1, user2);
+        List<User> userList = Arrays.asList(user1, user2);
 
         when(userRepository.findAll()).thenReturn(userList);
 
@@ -70,11 +71,13 @@ public class UserServiceTest {
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
-        AccountHolder result = userService.findUserById(1L);
+        Optional<AccountHolder> result = userService.getUserById(1L);
+
+        AccountHolder accountHolder = result.get();
 
         assertNotNull(result);
-        assertEquals("Alice", result.getName());
-        assertEquals(1L, result.getId());
+        assertEquals("Alice", accountHolder.getName());
+        assertEquals(1L, accountHolder.getId());
         verify(userRepository, times(1)).findById(1L);
     }
 

@@ -2,6 +2,8 @@ package com.bankapp.banking_system.service;
 
 import com.bankapp.banking_system.model.accounts.Account;
 import com.bankapp.banking_system.model.embedded.Money;
+import com.bankapp.banking_system.model.users.AccountHolder;
+import com.bankapp.banking_system.repository.AccountHolderRepository;
 import com.bankapp.banking_system.repository.AccountRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,33 +27,32 @@ import static org.mockito.Mockito.*;
 class AccountServiceTest {
 
     @Mock
-    private AccountRepository accountRepository;
+    private AccountHolderRepository accountRepository;
 
     @InjectMocks
     private AccountService accountService;
 
-    private Account account;
+    private AccountHolder account;
 
     @BeforeEach
     void setUp() {
-        account = new Account();
+        account = new AccountHolder();
         account.setId(1L);
-        account.setBalance(new Money(new BigDecimal("500.00"), Currency.getInstance("USD")));
     }
 
     @Test
-    void testUpdateAccountBalance_success() {
+    void testUpdateAccountHolderMail_success() {
         // GIVEN
-        Money newBalance = new Money(new BigDecimal("1000.00"), Currency.getInstance("USD"));
+        String newName = "prueba";
 
-        Mockito.when(accountRepository.findById(1L)).thenReturn(Optional.of(account));
-        Mockito.when(accountRepository.save(any(Account.class))).thenAnswer(i -> i.getArgument(0));
+        Mockito.when(accountRepository.findById(1L)).thenReturn(Optional.ofNullable(account));
+        Mockito.when(accountRepository.save(any(AccountHolder.class))).thenAnswer(i -> i.getArgument(0));
 
         // WHEN
-        Account updatedAccount = accountService.updateAccountBalance(1L, newBalance);
+        AccountHolder updatedAccount = accountService.updateAccountHolderMail(1L, newName);
 
         // THEN
-        assertEquals(newBalance, updatedAccount.getBalance());
+        assertEquals(newName, updatedAccount.getName());
         verify(accountRepository).findById(1L);
         verify(accountRepository).save(account);
     }
@@ -59,17 +60,20 @@ class AccountServiceTest {
     @Test
     void testUpdateAccountBalance_accountNotFound() {
         // GIVEN
+        Long accountId = 1L;
         Money newBalance = new Money(new BigDecimal("1000.00"), Currency.getInstance("USD"));
 
-        Mockito.when(accountRepository.findById(1L)).thenReturn(Optional.empty());
-
+        Mockito.when(accountRepository.findById(accountId)).thenReturn(Optional.empty());
+        System.out.println("test");
         // THEN
         assertThrows(RuntimeException.class, () -> {
             // WHEN
-            accountService.updateAccountBalance(1L, newBalance);
+            accountService.updateAccountBalance(accountId, newBalance);
+            System.out.println("updating account balance...");
         });
 
-        verify(accountRepository).findById(1L);
+        verify(accountRepository).findById(accountId);
         verify(accountRepository, never()).save(any());
+        System.out.println("end of updateAccountBalance");
     }
 }
