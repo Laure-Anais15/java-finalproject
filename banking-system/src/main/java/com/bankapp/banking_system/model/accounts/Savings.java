@@ -40,32 +40,4 @@ public class Savings extends Account {
 
     @Column(name = "secret_key")
     private String secretKey;
-
-    /*constructeur a rajouter pour imposer les regles des la création?
-
-    public Savings(Money balance, AccountHolder primaryOwner, String secretKey) {
-        super(balance, primaryOwner);
-        this.secretKey = secretKey;
-
-        // Valeurs par défaut si rien n'est fourni
-        this.minimumBalance = new Money(new BigDecimal("1000"));
-        this.interestRate = new BigDecimal("0.0025");
-    }
-
-2e constructeur avec vérification
-
-public Savings(Money balance, AccountHolder primaryOwner, String secretKey, Money minimumBalance, BigDecimal interestRate) {
-    super(balance, primaryOwner);
-    this.secretKey = secretKey;
-
-    if (minimumBalance.getAmount().compareTo(new BigDecimal("100")) < 0) {
-        throw new IllegalArgumentException("Minimum balance cannot be below 100.");
-    }
-    if (interestRate.compareTo(new BigDecimal("0.5")) > 0) {
-        throw new IllegalArgumentException("Interest rate cannot exceed 0.5.");
-    }
-
-    this.minimumBalance = minimumBalance;
-    this.interestRate = interestRate;
-}     */
 }

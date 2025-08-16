@@ -15,22 +15,18 @@ public class UserService {
     @Autowired
     private AccountHolderRepository accountHolderRepository;
 
-    // Récupérer tous les utilisateurs
     public List<AccountHolder> getAllUsers() {
         return accountHolderRepository.findAll();
     }
 
-    // Récupérer un utilisateur par ID
     public Optional<AccountHolder> getUserById(Long id) {
         return accountHolderRepository.findById(id);
     }
 
-    // Créer un nouvel utilisateur
     public AccountHolder createUser(AccountHolder user) {
         return accountHolderRepository.save(user);
     }
 
-    // Supprimer un utilisateur
     public void deleteUser(Long id) {
         accountHolderRepository.deleteById(id);
     }

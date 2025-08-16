@@ -6,10 +6,10 @@ import com.bankapp.banking_system.model.embedded.Money;
 
 import java.math.BigDecimal;
 
-@Entity // Représente une table dans la BDD
-@Getter // Génère automatiquement les getters
-@Setter // Génère automatiquement les setters
-@NoArgsConstructor // Génère un constructeur vide (obligatoire pour JPA)
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Checking extends Account {
     @Embedded
     @AttributeOverrides({
@@ -27,5 +27,3 @@ public class Checking extends Account {
     @Column(name = "secret_key")
     private String secretKey;
 }
-
-//rajouter une @Table pour préciser le nom de la table? @Table(name = "checking")

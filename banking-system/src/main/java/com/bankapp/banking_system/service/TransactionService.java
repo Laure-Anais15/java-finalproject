@@ -20,23 +20,23 @@ public class TransactionService {
             throw new IllegalArgumentException("Transfer amount must be greater than 0.");
         }
 
-        // Charger les comptes (ils seront soit CheckingAccount, soit SavingAccount...)
+        // Load accounts (either CheckingAccount, either SavingAccount...)
         var fromAccount = accountRepository.findById(fromAccountId)
                 .orElseThrow(() -> new RuntimeException("Sender account not found"));
 
         var toAccount = accountRepository.findById(toAccountId)
                 .orElseThrow(() -> new RuntimeException("Recipient account not found"));
 
-        // Vérification solde
+        // Check balance
         if (fromAccount.getBalance().getAmount().compareTo(amount) < 0) {
             throw new RuntimeException("Insufficient funds on sender account");
         }
 
-        // Modification des soldes
+        // Modify balance
         fromAccount.getBalance().setAmount(fromAccount.getBalance().getAmount().subtract(amount));
         toAccount.getBalance().setAmount(toAccount.getBalance().getAmount().add(amount));
 
-        // Sauvegarde
+        // Save
         accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
     }

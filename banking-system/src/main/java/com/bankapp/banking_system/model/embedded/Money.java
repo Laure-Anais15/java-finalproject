@@ -22,5 +22,3 @@ public class Money {
         this.currency = Currency.getInstance("EUR");
     }
 }
-
-//ajouter validation pour eviter un amount nul ou négatif selon la logique métier?

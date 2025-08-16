@@ -23,7 +23,7 @@ public class AdminService {
         return userRepository.findAll();
     }
 
-    // Supprimer un utilisateur
+    // Delete a user
     public void deleteUser(Long userId) {
         if (!userRepository.existsById(userId)) {
             throw new RuntimeException("User not found");
@@ -31,12 +31,12 @@ public class AdminService {
         userRepository.deleteById(userId);
     }
 
-    // Consulter tous les comptes
+    // Check all the accounts
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
     }
 
-    // Supprimer un compte
+    // Delete an account
     public void deleteAccount(Long accountId) {
         if (!accountRepository.existsById(accountId)) {
             throw new RuntimeException("Account not found");

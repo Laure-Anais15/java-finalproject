@@ -50,7 +50,7 @@ public abstract class Account implements Serializable {
         this.creationDate = LocalDate.now();
     }
 
-    //état actuel du compte bancaire - initialisé comme actif, tout nouveau compte sera donc actif par défaut
+    //current state of the account - new accounts initialized as active by default
     @Enumerated(EnumType.STRING)
     private Status status = Status.ACTIVE;
 
